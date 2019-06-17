@@ -14,16 +14,13 @@
 						<Label row="1" col="0" class="fa" :text="'fa-bars' | fonticon" verticalAlignment="center"
                     		horizontalAlignment="left" iosOverflowSafeArea="false" />
                         <Label row="1" col="1" text="Editar perfil" padding="10" />
-						<!-- <Label row="2" col="0" class="fa" :text="'fa-users' | fonticon" verticalAlignment="center"
-                    		horizontalAlignment="left" iosOverflowSafeArea="false" />
-                        <Label row="2" col="1" text="Configuración" padding="10" /> -->
                     </GridLayout>
                     <Label text="Cerrar" color="black" padding="10" style="horizontal-align: center"
                         @tap="onCloseDrawerTap" />
                 </StackLayout>
 				<StackLayout ~mainContent>
 					<GridLayout row="0" ref="navStatusBar" class="navStatusBar" backgroundColor="#bd2122" verticalAlignment="top" height="40"
-					width="100%" rows="auto" columns="*,auto,auto,auto">
+					width="100%" rows="auto" columns="*,3*,3*,3*">
 						<Label :text="'fa-bars' | fonticon" @tap="onOpenDrawerTap" class="fa button-bars"
 							row="0"	textWrap="true" />
 						<Image col="1" row="0" @tap="search" horizontalAlignment="right" class="status-img"
@@ -74,7 +71,7 @@
 					<GridLayout v-show="selectedTabview == 1" row="2" width="100%" backgroundColor="white" rows="60, *" columns="*">
 						<AbsoluteLayout backgroundColor="#fff" row="0" col="0">
 							<Label text="" left="10" top="20" width="95%" height="20" class="barcodefranja" backgroundColor="#EC0000"/>
-							<Label @tap="scanQrCode" left="200" top="5" class="fa barcode" :text="'fa-qrcode' | fonticon" verticalAlignment="center"
+							<Label @tap="scanQrCode" left="150" top="5" class="fa barcode" :text="'fa-qrcode' | fonticon" verticalAlignment="center"
 							horizontalAlignment="center" iosOverflowSafeArea="false" />
 						</AbsoluteLayout>
 						<ListView ref="listview" row="1" col="0" separatorColor="transparent" for="(item, index) in itemsCategory" :key="index">
@@ -375,11 +372,13 @@ export default {
 	vertical-align: center;
 }
 .button-bars{
-	margin-left: 30px;
-	margin-top: 20px;
-	font-size: 25px;
+	margin-left: 10px;
+	margin-top: 15px;
+	font-size: 20px;
+	width: 50;
+	height: 30;
 	color: #fff;
-	padding: 10;
+	padding: 5;
 }
 .button-menu{
 	font-size: 25px;
@@ -395,19 +394,23 @@ export default {
 	border-bottom-left-radius: 20;
 }
 .barcode{
+	margin-left: 1;
 	font-size: 25px;
-	width: 120px;
+	width: 70px;
 	margin-top: 2;
 	color: #fff;
 	text-align: center;
 	padding-top: 10%;
 	border: none;
-	height: 120px;
+	height: 70px;
 	border-radius: 60px;
 	background-color: #B40000;
 }
 .barcodefranja{
 	border: none;
 	border-radius: 10px;
+}
+.barscustom{
+	background-color: #fff;
 }
 </style>
