@@ -1,25 +1,34 @@
 <template>
 	<page actionBarHidden="true" backgroundSpanUnderStatusBar="true">
 		<!-- @loaded="onLoaded" -->
-		<GridLayout rows="*" height="100%" backgroundColor="#E2E2E2">
+		<GridLayout rows="*" height="100%" backgroundColor="#F6F6F6">
 			<RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="#fff">
                     <StackLayout height="150" style="text-align: center; vertical-align: center;">
                         <Image class="logo" src="~/images/bar_code.png"></Image>
                     </StackLayout>
-                    <GridLayout columns="20,auto" rows="auto, auto, auto" class="m-l-8">
+                    <GridLayout columns="20,auto" rows="2*,2*,2*,2*,3*,10*" class="m-l-8">
 						<Label row="0" col="0" class="fa" :text="'fa-bars' | fonticon" verticalAlignment="center"
                     		horizontalAlignment="left" iosOverflowSafeArea="false" />
                         <Label row="0" col="1" text="Ingresa el cupon" padding="10" />
 						<Label row="1" col="0" class="fa" :text="'fa-bars' | fonticon" verticalAlignment="center"
                     		horizontalAlignment="left" iosOverflowSafeArea="false" />
                         <Label row="1" col="1" text="Editar perfil" padding="10" />
-						<!-- <Label row="2" col="0" class="fa" :text="'fa-users' | fonticon" verticalAlignment="center"
+						<Label row="2" col="0" class="fa" :text="'fa-users' | fonticon" verticalAlignment="center"
                     		horizontalAlignment="left" iosOverflowSafeArea="false" />
-                        <Label row="2" col="1" text="Configuración" padding="10" /> -->
+                        <Label row="2" col="1" text="Lista de deseo" padding="10" />
+						<Label row="3" col="0" class="fa" :text="'fa-users' | fonticon" verticalAlignment="center"
+                    		horizontalAlignment="left" iosOverflowSafeArea="false" />
+                        <Label row="3" col="1" text="Ultimas compras" padding="10" />
+						<Label row="4" col="0" class="fa" :text="'fa-undo' | fonticon" verticalAlignment="center"
+                    		horizontalAlignment="left" iosOverflowSafeArea="false" />
+                        <Label row="4" col="1" text="Seguir comprando" padding="10" @tap="onCloseDrawerTap" verticalAlignment="center"
+                    		horizontalAlignment="left" iosOverflowSafeArea="false"/>
+						<Label row="5" col="0" class="fa" :text="'fa-close' | fonticon" verticalAlignment="center"
+                    		horizontalAlignment="center" iosOverflowSafeArea="false" />
+                        <Label row="5" col="1" text="Cerrar Sesion" padding="10" left="30" verticalAlignment="center"
+                    		horizontalAlignment="center" iosOverflowSafeArea="false" @tap="logoutUser"/>
                     </GridLayout>
-                    <Label text="Cerrar" color="black" padding="10" style="horizontal-align: center"
-                        @tap="onCloseDrawerTap" />
                 </StackLayout>
 				<StackLayout ~mainContent>
 					<GridLayout row="0" ref="navStatusBar" class="navStatusBar" backgroundColor="#bd2122" verticalAlignment="top" height="40"
@@ -71,9 +80,9 @@
 						</ListView>
 					</GridLayout>
 
-					<GridLayout v-show="selectedTabview == 1" row="2" width="100%" backgroundColor="white" rows="60, *" columns="*">
+					<GridLayout v-show="selectedTabview == 1" row="2" width="100%" backgroundColor="white" rows="120, *" columns="*">
 						<AbsoluteLayout backgroundColor="#fff" row="0" col="0">
-							<Label text="" left="10" top="20" width="95%" height="20" class="barcodefranja" backgroundColor="#EC0000"/>
+							<Label text="" left="10" top="20" width="95%" height="20" class="barcodefranja"/>
 							<Label @tap="scanQrCode" left="200" top="5" class="fa barcode" :text="'fa-qrcode' | fonticon" verticalAlignment="center"
 							horizontalAlignment="center" iosOverflowSafeArea="false" />
 						</AbsoluteLayout>
@@ -105,6 +114,7 @@
 	import Category from "./custom/category";
 	import ItemDetails from "./ItemDetails";
 	import { alert, confirm, prompt, login, action, inputType } from "tns-core-modules/ui/dialogs";
+	import Login from "./Login";
 	const BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
     var barcodescanner = new BarcodeScanner();
 	const gestures = require("ui/gestures");
@@ -122,9 +132,8 @@ export default {
 			return this.category.slice().reverse();
 		}
 	},
-
 	mounted () {
-		// SwissArmyKnife.setAndroidStatusBarColor("#b51213");
+		
 	},
 	data() {
 		return {
@@ -221,6 +230,22 @@ export default {
 		};
 	},
 	methods: {
+		logoutUser()
+		{
+			confirm({
+				title: "Cerrar Sesion",
+				message: "Seguro que desea cerrar la sesion?",
+				okButtonText: "Aceptar",
+				cancelButtonText: "Cancelar"
+				}).then(result => {
+					if(result){
+						// this.$store.commit('logoutuser')
+						this.$navigateTo(Login, { clearHistory: true })
+					}else{
+
+					}
+			});	
+		},
 		onOpenDrawerTap() {
             this.$refs.drawer.nativeView.showDrawer();
         },
@@ -397,17 +422,20 @@ export default {
 .barcode{
 	font-size: 25px;
 	width: 120px;
-	margin-top: 2;
+	margin-top: 15;
 	color: #fff;
 	text-align: center;
 	padding-top: 10%;
 	border: none;
 	height: 120px;
 	border-radius: 60px;
-	background-color: #B40000;
+	background-color: #FF8254;
+	border: 5 solid #fff;
 }
 .barcodefranja{
+	margin-top: 15;
 	border: none;
 	border-radius: 10px;
+	background-color: #ffffff;
 }
 </style>
